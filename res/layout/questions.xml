@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<EditText android:id="@+id/number1" android:layout_margin="5dip"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:hint="@string/number_1" android:textSize="20sp"
+		android:textStyle="bold" android:inputType="numberDecimal"
+		android:maxLength="2" />
+	<EditText android:id="@+id/number2" android:layout_margin="5dip"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:hint="@string/number_2" android:textSize="20sp"
+		android:textStyle="bold" android:inputType="numberSigned"
+		android:maxLength="2" />
+	<EditText android:id="@+id/number3" android:layout_margin="5dip"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:hint="@string/number_3" android:textSize="20sp"
+		android:textStyle="bold" android:inputType="numberSigned"
+		android:maxLength="2" />
+	<EditText android:id="@+id/number4" android:layout_margin="5dip"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:hint="@string/number_4" android:textSize="20sp"
+		android:textStyle="bold" android:inputType="numberSigned"
+		android:maxLength="2" />
+</LinearLayout>
