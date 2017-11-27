@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+
+// 获取当前时间
+def nowTimeStr() {
+    return new Date().format("yyyy_MM_dd HH:mm:ss", TimeZone.getTimeZone("GMT+8:00"))
+}
+
+// 获取当前时间
+def nowTimeLong() {
+    return new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("GMT+8:00"))
+}
+
+// android的apk相关配置
+android {
+    // 编译版本, >=targetSdkVersion
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+
+    // 基本配置
+    defaultConfig {
+        applicationId "com.fzh.game.ershi"
+        minSdkVersion 21
+        targetSdkVersion 24
+        versionCode 20101
+        versionName "2.0.1.01"
+        // 分dex多包
+        multiDexEnabled true
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 打包指定字符串资源
+        resConfigs "en-rGB", "en-rUS", "zh-rCN"
+    }
+
+    // 签名
+    signingConfigs {
+        release {
+            storeFile file("fzh20171107.keystore")
+            storePassword '19841111'
+            keyAlias 'android.keystore'
+            keyPassword '19841111'
+        }
+
+        debug {
+            storeFile file("fzh20171107.keystore")
+            storePassword '19841111'
+            keyAlias 'android.keystore'
+            keyPassword '19841111'
+        }
+    }
+
+    // 编译类型
+    buildTypes {
+        release {
+            debuggable false
+            //混淆开关
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            // 自定义变量, 字符串不知道怎么拼接
+            buildConfigField("long", "build_time", "${nowTimeLong()}l")
+        }
+        debug {
+            debuggable true
+            shrinkResources false
+            signingConfig signingConfigs.debug
+            // 自定义变量, 字符串不知道怎么拼接
+            buildConfigField("long", "build_time", "${nowTimeLong()}l")
+        }
+    }
+
+    // 分渠道打包
+    /*productFlavors {
+        LETV {
+            manifestPlaceholders = [UMENG_CHANNEL: LETV]
+        }
+        XIAOMI {
+            manifestPlaceholders = [UMENG_CHANNEL: XIAOMI]
+        }
+    }*/
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.android.support:support-v13:24.2.1'
+    compile 'com.android.support:support-annotations:24.2.1'
+    // 集成umeng
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //testImplementation 'junit:junit:4.12'
+    //androidTestImplementation 'com.android.support.test:runner:0.5'
+    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+}

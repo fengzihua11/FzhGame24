@@ -1,0 +1,13 @@
+*.DS_Store
+bin/
+build/
+captures/
+.idea/
+gen/
+captures/
+.gradle/
+.project
+.classpath
+*.iml
+local.properties
+.externalNativeBuild
