@@ -2,10 +2,8 @@ package com.fzh.game.ershi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,14 +33,11 @@ import java.util.Map;
 public class FzhGame24Activity extends Activity implements OnRectClickListener {
 
     private static final String TAG = "fzh24m";
-
-    public static final String XMLNAME = "showdialog";
-    public static final String AD_KEY = "showad";
-
+    // 游戏视图
     private Game24View gameView;
+    // 答案视图
     private Game24AnswerView answerView;
-    private int showAd = 1;
-
+    // 设备相关信息
     private DisplayMetrics mDisplay;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +45,8 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
         getDisplay();
         setContentView(R.layout.main);
         makeView();
-        if (getInt(1) == 1)
-            openAdTip();
+        //if (getInt(1) == 1)
+            //openAdTip();
     }
 
     @Override
@@ -62,73 +57,33 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
         reportEvent("open_game");
     }
 
-    private void getDisplay() {
-        Resources res = getResources();
-        mDisplay = res.getDisplayMetrics();
-        Log.d(TAG, "--" + mDisplay.toString());
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 1, 1, getResources().getString(
+                R.string.game_description_icon));
+        menu.add(0, 2, 1, getResources().getString(R.string.test_other_people));
+        menu.add(0, 3, 1, getResources().getString(
+                R.string.make_question_demo));
+        return super.onCreateOptionsMenu(menu);
     }
 
-    public void makeView() {
-        gameView = (Game24View) findViewById(R.id.gameView);
-        gameView.setOnRectClickListener(this);
-        answerView = (Game24AnswerView) findViewById(R.id.answerView);
-        answerView.setOnRectClickListener(this);
-    }
-
-    public void pushInt(int value) {
-        SharedPreferences.Editor editor = getSharedPreferences(XMLNAME,
-                Context.MODE_PRIVATE).edit();
-        editor.putInt(AD_KEY, value);
-        editor.apply();
-    }
-
-    public int getInt(int defValue) {
-        SharedPreferences pre = getSharedPreferences(XMLNAME,
-                Context.MODE_WORLD_READABLE);
-        showAd = pre.getInt(AD_KEY, defValue);
-        return showAd;
-    }
-
-    public void onRectClick(int flag) {
-        switch (flag) {
-            case Game24View.EXIT_GAME:
-                showCloseAppDailog();
-
-                reportEvent("exit_game_click");
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 1:
+                openGameDescription();
                 break;
-
-            case Game24View.GAME_OVER:
-                showGameAgaimDailog();
+            case 2:
+                getHelpBySms();
                 break;
-
-            case Game24View.SHOW_ANSWER:
-                answerView.setVisibility(View.VISIBLE);
-                answerView.setPicIds(gameView.getPic());
-                gameView.setTouchable(false);
-                reportEvent("show_answer_click");
-                break;
-
-            case Game24View.CLOSE_ANSWER:
-                answerView.setVisibility(View.GONE);
-                gameView.setTouchable(true);
+            case 3:
+                makeQuestionDailog();
                 break;
         }
+        return true;
     }
 
-    protected void openAdTip() {
-        final AlertDialog dialog = new AlertDialog.Builder(this).setIcon(
-                R.mipmap.ic_launcher).setTitle(R.string.ad_miss_icon).setMessage(
-                R.string.ad_show_content).setPositiveButton(
-                R.string.ad_noshow_miss_icon,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        pushInt(0);
-                        dialog.dismiss();
-                    }
-                }).setNegativeButton(R.string.ad_show_miss_icon, null).create();
-        dialog.show();
-    }
-
+    @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_UP) {
@@ -144,6 +99,91 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
         return super.dispatchKeyEvent(event);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UmengAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * 读取当前设置的显示信息
+     */
+    private void getDisplay() {
+        Resources res = getResources();
+        mDisplay = res.getDisplayMetrics();
+        Log.d(TAG, "--" + mDisplay.toString());
+    }
+
+    /**
+     * 构造相关视图
+     */
+    public void makeView() {
+        gameView = (Game24View) findViewById(R.id.gameView);
+        gameView.setOnRectClickListener(this);
+        answerView = (Game24AnswerView) findViewById(R.id.answerView);
+        answerView.setOnRectClickListener(this);
+    }
+
+    /**
+     * 区域点击响应
+     * @param flag
+     */
+    @Override public void onRectClick(int flag) {
+        switch (flag) {
+            case Game24View.EXIT_GAME:
+                // 退出游戏
+                showCloseAppDailog();
+                reportEvent("exit_game_click");
+                break;
+
+            case Game24View.GAME_OVER:
+                // 当前局结束
+                showGameAgaimDailog();
+                break;
+
+            case Game24View.SHOW_ANSWER:
+                // 显示答案
+                answerView.setVisibility(View.VISIBLE);
+                answerView.setPicIds(gameView.getPic());
+                gameView.setTouchable(false);
+                reportEvent("show_answer_click");
+                break;
+
+            case Game24View.CLOSE_ANSWER:
+                // 关闭答案
+                answerView.setVisibility(View.GONE);
+                gameView.setTouchable(true);
+                break;
+        }
+    }
+
+    /**
+     * 弹出对话框
+     *
+     * @deprecated
+     */
+    private void openAdTip() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).setIcon(
+                R.mipmap.ic_launcher).setTitle(R.string.ad_miss_icon).setMessage(
+                R.string.ad_show_content).setPositiveButton(
+                R.string.ad_noshow_miss_icon,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //pushInt(0);
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton(R.string.ad_show_miss_icon, null).create();
+        dialog.show();
+    }
+
+    /**
+     * 显示退出对话框
+     */
     protected void showCloseAppDailog() {
         AlertDialog dialog = new AlertDialog.Builder(this).setIcon(
                 R.mipmap.ic_launcher).setTitle(R.string.login_out_title_tip)
@@ -271,42 +311,6 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, 1, 1, getResources().getString(
-                R.string.game_description_icon));
-        menu.add(0, 2, 1, getResources().getString(R.string.test_other_people));
-        menu
-                .add(0, 3, 1, getResources().getString(
-                        R.string.make_question_demo));
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 1:
-                openGameDescription();
-                break;
-            case 2:
-                getHelpBySms();
-                break;
-            case 3:
-                makeQuestionDailog();
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        UmengAgent.onPause(this);
-    }
-
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     /**
      * 上报事件

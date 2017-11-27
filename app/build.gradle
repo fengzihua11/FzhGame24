@@ -14,7 +14,7 @@ def nowTimeLong() {
 android {
     // 编译版本, >=targetSdkVersion
     compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '26.0.2'
 
     // 基本配置
     defaultConfig {
@@ -90,6 +90,11 @@ dependencies {
     compile 'com.android.support:support-annotations:24.2.1'
     // 集成umeng
     compile 'com.umeng.analytics:analytics:latest.integration'
+    // 添加leakcanary: debug, release, test
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
     //testImplementation 'junit:junit:4.12'
     //androidTestImplementation 'com.android.support.test:runner:0.5'
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'

@@ -1,9 +1,11 @@
 package com.fzh.game;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import com.fzh.game.ershi.BuildConfig;
 import com.fzh.game.staitic.umeng.UmengAgent;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  *
@@ -12,16 +14,13 @@ public class MyApplication extends Application {
 
     private static final String TAG = "fzh24";
 
-    //private RefWatcher refWatcher;
     private static MyApplication mContext;
 
-    // setting
-    //public static File mFileDir;
-
-    /*public static RefWatcher getRefWatcher(Context context) {
-        WallpapersApplication application = (WallpapersApplication) context.getApplicationContext();
+    private RefWatcher refWatcher;
+    public static RefWatcher getRefWatcher(Context context) {
+        MyApplication application = (MyApplication) context.getApplicationContext();
         return application.refWatcher;
-    }*/
+    }
 
     public static MyApplication getContext() {
         return mContext;

@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- 获取用户地理信息权限,用于帮助精确统计开发者的程序发布之后的用户分布情况 ,mogo会使用该权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -17,6 +16,8 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <!-- 多盟所需权限,无此权限多盟将无法展示广告 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    //
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name="com.fzh.game.MyApplication"
@@ -29,10 +30,10 @@
             android:name=".FzhGame24Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

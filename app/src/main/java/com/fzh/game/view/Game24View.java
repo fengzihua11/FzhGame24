@@ -75,6 +75,7 @@ public class Game24View extends View {
 
     private CiclerDrawable[] cicer = new CiclerDrawable[13];
 
+    // 背景图
     private Drawable backGround;
 
     private PlayStatus playStatus = PlayStatus.WASH_MODE;
@@ -85,7 +86,7 @@ public class Game24View extends View {
 
     public void again() {
         flushAllRect();
-        // ϴ��
+        //
         UtilTool.washPoke(pokes);
         calentGameCards(0);
         invalidate();
