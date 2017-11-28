@@ -6,6 +6,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
 
+/**
+ * 回到原位动画
+ */
 public class AnimateDrawable extends ProxyDrawable {
 
     private Animation mAnimation;

@@ -6,6 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+/**
+ *
+ * 每一个poker对像
+ */
 public class CardBean {
 
     public static final int NO_ID = -1;
@@ -39,7 +43,7 @@ public class CardBean {
     }
 
     /**
-     * �Ƿ����ڵ�(pointX, pointY)
+     * 是否点击在指定rect区域(pointX, pointY)
      *
      * @param pointX
      * @param pointY

@@ -13,6 +13,10 @@ import android.content.Context;
  */
 public class UtilTool {
 
+    /**
+     * 洗牌
+     * @param pokes
+     */
     public static final void washPoke(ArrayList<Integer> pokes) {
         Collections.shuffle(pokes);
     }
