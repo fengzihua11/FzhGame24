@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/answer_1" android:state_pressed="true"></item>
+    <item android:drawable="@drawable/answer_0"></item>
+</selector>

@@ -4,6 +4,7 @@ import com.fzh.game.ershi.R;
 
 public class Flagconstant {
 
+    // 相关资源id
     public static final int[] picIds = {
             R.drawable.a_1, R.drawable.a_2, R.drawable.a_3, R.drawable.a_4,
             R.drawable.two_1, R.drawable.two_2, R.drawable.two_3, R.drawable.two_4,

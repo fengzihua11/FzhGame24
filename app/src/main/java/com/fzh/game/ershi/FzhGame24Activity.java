@@ -2,11 +2,15 @@ package com.fzh.game.ershi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,7 +34,7 @@ import java.util.Map;
  * @author fengzihua
  * @since 2017.11.07
  */
-public class FzhGame24Activity extends Activity implements OnRectClickListener {
+public class FzhGame24Activity extends AppCompatActivity implements OnRectClickListener {
 
     private static final String TAG = "fzh24m";
     // 游戏视图
@@ -42,11 +46,17 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 1. 读取屏幕
         getDisplay();
         setContentView(R.layout.main);
-        makeView();
-        //if (getInt(1) == 1)
-            //openAdTip();
+
+        // 1. 顶部actionBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // 2. 初始化视图
+        initView();
     }
 
     @Override
@@ -122,44 +132,11 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
     /**
      * 构造相关视图
      */
-    public void makeView() {
+    private void initView() {
         gameView = (Game24View) findViewById(R.id.gameView);
         gameView.setOnRectClickListener(this);
         answerView = (Game24AnswerView) findViewById(R.id.answerView);
         answerView.setOnRectClickListener(this);
-    }
-
-    /**
-     * 区域点击响应
-     * @param flag
-     */
-    @Override public void onRectClick(int flag) {
-        switch (flag) {
-            case Game24View.EXIT_GAME:
-                // 退出游戏
-                showCloseAppDailog();
-                reportEvent("exit_game_click");
-                break;
-
-            case Game24View.GAME_OVER:
-                // 当前局结束
-                showGameAgaimDailog();
-                break;
-
-            case Game24View.SHOW_ANSWER:
-                // 显示答案
-                answerView.setVisibility(View.VISIBLE);
-                answerView.setPicIds(gameView.getPic());
-                gameView.setTouchable(false);
-                reportEvent("show_answer_click");
-                break;
-
-            case Game24View.CLOSE_ANSWER:
-                // 关闭答案
-                answerView.setVisibility(View.GONE);
-                gameView.setTouchable(true);
-                break;
-        }
     }
 
     /**
@@ -184,7 +161,7 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
     /**
      * 显示退出对话框
      */
-    protected void showCloseAppDailog() {
+    private void showCloseAppDailog() {
         AlertDialog dialog = new AlertDialog.Builder(this).setIcon(
                 R.mipmap.ic_launcher).setTitle(R.string.login_out_title_tip)
                 .setPositiveButton(R.string.login_out_sure,
@@ -198,7 +175,10 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
         dialog.show();
     }
 
-    protected void showGameAgaimDailog() {
+    /**
+     * 再来一局
+     */
+    private void showGameAgaimDailog() {
         AlertDialog dialog = new AlertDialog.Builder(this).setIcon(
                 R.mipmap.ic_launcher).setTitle(R.string.game_over_title_tip)
                 .setPositiveButton(R.string.game_over_yes,
@@ -217,7 +197,10 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
         dialog.show();
     }
 
-    protected void openGameDescription() {
+    /**
+     * 游戏介绍
+     */
+    private void openGameDescription() {
         AlertDialog dialog = new AlertDialog.Builder(this).setIcon(
                 R.mipmap.ic_launcher).setTitle(R.string.game_description_icon)
                 .setMessage(R.string.game_description).setNegativeButton(
@@ -248,7 +231,10 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
         startActivity(mIntent);
     }
 
-    protected void makeQuestionDailog() {
+    /**
+     * 出题
+     */
+    private void makeQuestionDailog() {
         View group = ((LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.questions, null);
         final EditText number1 = (EditText) group.findViewById(R.id.number1);
@@ -320,5 +306,75 @@ public class FzhGame24Activity extends Activity implements OnRectClickListener {
     private void reportEvent(String eventId) {
         Map<String, String> map = new HashMap();
         UmengAgent.onEvent(eventId, map);
+    }
+
+    /**
+     * 上一题
+     */
+    public void onPre(View view) {
+        if(gameView != null) {
+            gameView.pre();
+        }
+    }
+
+    /**
+     * 重置
+     */
+    public void onReset(View view) {
+        if(gameView != null) {
+            gameView.reset();
+        }
+    }
+
+    /**
+     * 退出游戏
+     */
+    public void onExit(View view) {
+        showCloseAppDailog();
+        reportEvent("exit_game_click");
+
+    }
+
+    /**
+     * 显示答案
+     *
+     * @param view
+     */
+    public void onAnswer(View view) {
+        answerView.setVisibility(View.VISIBLE);
+        answerView.setPicIds(gameView.getPic());
+        gameView.setTouchable(false);
+        reportEvent("show_answer_click");
+    }
+
+    /**
+     * 下一题
+     *
+     * @param view
+     */
+    public void onNext(View view) {
+        if(gameView != null) {
+            gameView.next();
+        }
+    }
+
+    /**
+     * 区域点击响应
+     * @param flag
+     */
+    @Override public void onRectClick(int flag) {
+        switch (flag) {
+
+            case Game24View.GAME_OVER:
+                // 当前局结束
+                showGameAgaimDailog();
+                break;
+
+            case Game24View.CLOSE_ANSWER:
+                // 关闭答案
+                answerView.setVisibility(View.GONE);
+                gameView.setTouchable(true);
+                break;
+        }
     }
 }

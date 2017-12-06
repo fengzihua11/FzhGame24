@@ -17,6 +17,7 @@ import android.graphics.Rect;
 import android.graphics.Paint.Align;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -32,6 +33,8 @@ import android.view.animation.Animation.AnimationListener;
  * @since 2017.11.07
  */
 public class Game24AnswerView extends View {
+
+    private static final String TAG = "fzh24m";
 
     private static final int POKE_WIDTH = 200;
     private static final int POKE_HEIGHT = 300;
@@ -78,7 +81,7 @@ public class Game24AnswerView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(),
-                widthMeasureSpec), 630);
+                widthMeasureSpec), 960);
     }
 
     @Override
@@ -88,6 +91,8 @@ public class Game24AnswerView extends View {
         mHeight = getHeight();
         backGround.setBounds(0, 0, mWidth, mHeight);
         initData();
+
+        Log.d(TAG, "onSizeChanged: [" + mWidth + "," + mHeight + "], [" + POKE_WIDTH + ", " + POKE_HEIGHT + "]");
     }
 
     public void onDraw(Canvas canvas) {

@@ -1,11 +1,11 @@
 package com.fzh.game;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 import com.fzh.game.ershi.BuildConfig;
 import com.fzh.game.staitic.umeng.UmengAgent;
-import com.squareup.leakcanary.RefWatcher;
+//import com.squareup.leakcanary.RefWatcher;
+//import android.content.Context;
 
 /**
  *
@@ -16,11 +16,11 @@ public class MyApplication extends Application {
 
     private static MyApplication mContext;
 
-    private RefWatcher refWatcher;
-    public static RefWatcher getRefWatcher(Context context) {
-        MyApplication application = (MyApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
+//    private RefWatcher refWatcher;
+//    public static RefWatcher getRefWatcher(Context context) {
+//        MyApplication application = (MyApplication) context.getApplicationContext();
+//        return application.refWatcher;
+//    }
 
     public static MyApplication getContext() {
         return mContext;
