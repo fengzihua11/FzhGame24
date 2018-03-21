@@ -14,7 +14,7 @@ def nowTimeLong() {
 android {
     // 编译版本, >=targetSdkVersion
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '26.0.2'
 
     // 基本配置
     defaultConfig {
@@ -33,14 +33,14 @@ android {
     // 签名
     signingConfigs {
         release {
-            storeFile file("fzh20171107.keystore")
+            storeFile file("keystore/fzh20171107.keystore")
             storePassword '19841111'
             keyAlias 'android.keystore'
             keyPassword '19841111'
         }
 
         debug {
-            storeFile file("fzh20171107.keystore")
+            storeFile file("keystore/fzh20171107.keystore")
             storePassword '19841111'
             keyAlias 'android.keystore'
             keyPassword '19841111'
@@ -83,6 +83,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'

@@ -2,10 +2,8 @@ package com.fzh.game.ershi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,10 +68,12 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 1, 1, getResources().getString(
-                R.string.game_description_icon));
+                R.string.game_description_label));
+
+        // 2. 求助
         menu.add(0, 2, 1, getResources().getString(R.string.test_other_people));
-        menu.add(0, 3, 1, getResources().getString(
-                R.string.make_question_demo));
+        // 3. 出题
+        //menu.add(0, 3, 1, getResources().getString(R.string.make_question_demo));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -201,11 +201,8 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
      * 游戏介绍
      */
     private void openGameDescription() {
-        AlertDialog dialog = new AlertDialog.Builder(this).setIcon(
-                R.mipmap.ic_launcher).setTitle(R.string.game_description_icon)
-                .setMessage(R.string.game_description).setNegativeButton(
-                        R.string.rule_sure, null).create();
-        dialog.show();
+        Intent intent = new Intent(this, GameDescriptionActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -255,7 +252,7 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
         dialog.show();
     }
 
-    public void sendNumber(String num1, String num2, String num3, String num4) {
+    private void sendNumber(String num1, String num2, String num3, String num4) {
         int[] numbers = new int[4];
         numbers[0] = getNumber(num1);
         if (numbers[0] == -1) {
