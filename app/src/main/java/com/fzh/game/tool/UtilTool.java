@@ -36,7 +36,7 @@ public class UtilTool {
         int index = str.indexOf('+');
         if (index >= 0)
             return index;
-        index = str.indexOf('#');
+        index = str.indexOf('-');
         if (index >= 0)
             return index;
         index = str.indexOf('*');

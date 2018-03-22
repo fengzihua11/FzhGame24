@@ -1,6 +1,6 @@
 package com.fzh.game.view;
 
-import com.fzh.game.ershi.R;
+import com.fzh.game.newershi.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;

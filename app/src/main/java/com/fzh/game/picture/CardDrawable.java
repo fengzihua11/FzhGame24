@@ -61,7 +61,7 @@ public class CardDrawable extends Drawable {
     private void initPaint() {
         if(tPaint == null)
             tPaint = new Paint();
-        tPaint.setTextSize(48);
+        tPaint.setTextSize(54);
         tPaint.setColor(Color.RED);
         tPaint.setAntiAlias(true);
         tPaint.setShadowLayer(2, 3.0f, 2.0f, Color.GRAY);

@@ -1,10 +1,14 @@
 package com.fzh.game.constant;
 
-import com.fzh.game.ershi.R;
+import com.fzh.game.newershi.R;
 
 public class Flagconstant {
 
-    // 相关资源id
+    /**
+     * 卡片资源id
+     *
+     * value = index/4 + 1
+     */
     public static final int[] picIds = {
             R.drawable.a_1, R.drawable.a_2, R.drawable.a_3, R.drawable.a_4,
             R.drawable.two_1, R.drawable.two_2, R.drawable.two_3, R.drawable.two_4,
@@ -21,10 +25,16 @@ public class Flagconstant {
             R.drawable.k_1, R.drawable.k_2, R.drawable.k_3, R.drawable.k_4
     };
 
+    /**
+     * 运算符
+     */
     public static final int[] signIds = {
             R.drawable.add, R.drawable.sub, R.drawable.multiply, R.drawable.division
     };
 
+    /**
+     * 按钮
+     */
     public static final int[] buttons = {
             R.drawable.pre_0, R.drawable.reset_0, R.drawable.exit_0, R.drawable.next_0,
     };

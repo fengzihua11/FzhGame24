@@ -5,9 +5,10 @@
     <string name="rule_sure">我懂的</string>
     <string name="login_out_cancel">再玩会</string>
     <string name="login_out_title_tip">是否退出游戏？</string>
-    <string name="game_over_title_tip">敢再来一局么？</string>
-    <string name="game_over_yes">投降</string>
+    <string name="game_over_title_tip">再来一局？</string>
+    <string name="game_over_yes">退出</string>
     <string name="game_over_again">发牌</string>
+    <string name="game_answer_label">答案</string>
     <string name="game_description_label">规则</string>
     <string name="game_description">
     \n&#160;&#160;&#160;&#160;24点是把4个整数（一般是正整数）通过加减乘除运算，使最后的计算结果是24的一个数学游戏

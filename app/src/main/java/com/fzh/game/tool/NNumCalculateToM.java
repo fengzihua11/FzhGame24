@@ -1,5 +1,8 @@
 package com.fzh.game.tool;
 
+/**
+ * 计算数据
+ */
 public class NNumCalculateToM {
     private final static int PRECISION = 0;
     private final static int NUM = 4;
@@ -36,12 +39,12 @@ public class NNumCalculateToM {
 
                 // ���Ĵ������������expi-expj,expj-expi
                 number[i] = numi - numj;
-                expression[NUM - n] = numi + "#" + numj + "=" + number[i];
+                expression[NUM - n] = numi + "-" + numj + "=" + number[i];
                 if (circule(n - 1))
                     return true;
 
                 number[i] = numj - numi;
-                expression[NUM - n] = numj + "#" + numi + "=" + number[i];
+                expression[NUM - n] = numj + "-" + numi + "=" + number[i];
                 if (circule(n - 1))
                     return true;
 

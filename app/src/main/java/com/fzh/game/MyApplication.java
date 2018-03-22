@@ -2,7 +2,7 @@ package com.fzh.game;
 
 import android.app.Application;
 import android.util.Log;
-import com.fzh.game.ershi.BuildConfig;
+import com.fzh.game.newershi.BuildConfig;
 import com.fzh.game.staitic.umeng.UmengAgent;
 //import com.squareup.leakcanary.RefWatcher;
 //import android.content.Context;

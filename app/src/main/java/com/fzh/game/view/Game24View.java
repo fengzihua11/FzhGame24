@@ -16,7 +16,7 @@ import android.view.animation.TranslateAnimation;
 import com.fzh.game.bean.CardBean;
 import com.fzh.game.bean.CardBean.CardType;
 import com.fzh.game.constant.Flagconstant;
-import com.fzh.game.ershi.R;
+import com.fzh.game.newershi.R;
 import com.fzh.game.picture.AnimateDrawable;
 import com.fzh.game.picture.CardDrawable;
 import com.fzh.game.picture.CiclerDrawable;
@@ -30,7 +30,6 @@ public class Game24View extends View {
     private static final String TAG = "fzh24m";
 
     public static final int GAME_OVER = 0x0001;
-    public static final int CLOSE_ANSWER = 0x0003;
 
     // 无效值
     public static final int ISNULL_BEI = -30000;
@@ -38,14 +37,14 @@ public class Game24View extends View {
     public static final int CANNOT_DIV = -30001;
 
     // poke的高和宽
-    private static int POKE_WIDTH = 200;
-    private static int POKE_HEIGHT = 300;
+    public static int POKE_WIDTH = 200;
+    public static int POKE_HEIGHT = 300;
 
     // 运算符的高和宽
     private static final int SIGN_WIDTH = 90;
     private static final int SIGN_HEIGHT = 90;
     // 局点半径
-    private static final int CIRCLE_RADIAUS = 18;
+    private static int CIRCLE_RADIAUS = 18;
 
     // 视图的整个大小
     private int mWidth = 0;
@@ -88,7 +87,7 @@ public class Game24View extends View {
     private Drawable backGround;
 
     // 记录游戏当前状态
-    private PlayStatus playStatus = PlayStatus.WASH_MODE;
+    private PlayStatus playStatus = PlayStatus.POKER;
 
     public void setTouchable(boolean flag) {
         touchable = flag;
@@ -104,7 +103,7 @@ public class Game24View extends View {
 
     public int[] getPic() {
         int[] pics = new int[5];
-        if (playStatus == PlayStatus.WASH_MODE) {
+        if (playStatus == PlayStatus.POKER) {
             for (int i = 0; i < picRes.length; i++)
                 pics[i] = picRes[i];
             pics[4] = 0;
@@ -126,7 +125,7 @@ public class Game24View extends View {
      * @param nums
      */
     public void setPics(int nums[]) {
-        playStatus = PlayStatus.QUESTION_MODE;
+        playStatus = PlayStatus.NUMBER;
         flushAllRect();
         if (numbers == null)
             numbers = new int[4];
@@ -237,7 +236,7 @@ public class Game24View extends View {
      * 重置相关值
      */
     private void resetGameCards() {
-        if (playStatus == PlayStatus.WASH_MODE) {
+        if (playStatus == PlayStatus.POKER) {
             if (picRes == null) {
                 numbers = null;
                 if (rectListener != null) {
@@ -273,7 +272,7 @@ public class Game24View extends View {
      * @param begin
      */
     private void calentGameCards(int begin) {
-        playStatus = PlayStatus.WASH_MODE;
+        playStatus = PlayStatus.POKER;
         beginGameTime = begin;
         picRes = UtilTool.getResIdforCards(pokes, begin, 4);
         if (picRes == null) {
@@ -691,8 +690,13 @@ public class Game24View extends View {
         MOVE_DES, FA_POKE, SHOU_POKE
     }
 
+    /**
+     * 当前出题模式
+     * 1. poker
+     * 2. 数字
+     */
     private enum PlayStatus {
-        WASH_MODE, QUESTION_MODE
+        POKER, NUMBER
     }
 
     /**

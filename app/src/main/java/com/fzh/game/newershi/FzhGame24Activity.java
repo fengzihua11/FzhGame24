@@ -1,4 +1,4 @@
-package com.fzh.game.ershi;
+package com.fzh.game.newershi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.fzh.game.staitic.umeng.UmengAgent;
 import com.fzh.game.tool.UtilTool;
-import com.fzh.game.view.Game24AnswerView;
 import com.fzh.game.view.Game24View;
 import com.fzh.game.view.Game24View.OnRectClickListener;
 import java.util.HashMap;
@@ -34,11 +33,11 @@ import java.util.Map;
  */
 public class FzhGame24Activity extends AppCompatActivity implements OnRectClickListener {
 
-    private static final String TAG = "fzh24m";
+    private static final String TAG = "game24";
     // 游戏视图
     private Game24View gameView;
     // 答案视图
-    private Game24AnswerView answerView;
+    //private Game24AnswerView answerView;
     // 设备相关信息
     private DisplayMetrics mDisplay;
 
@@ -47,7 +46,7 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
 
         // 1. 读取屏幕
         getDisplay();
-        setContentView(R.layout.main);
+        setContentView(R.layout.play_screen);
 
         // 1. 顶部actionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -97,14 +96,16 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_UP) {
-            if (answerView.isShown()) {
+            /*if (answerView.isShown()) {
                 answerView.setVisibility(View.GONE);
                 gameView.setTouchable(true);
                 return true;
             } else {
                 showCloseAppDailog();
                 return true;
-            }
+            }*/
+            showCloseAppDailog();
+            return true;
         }
         return super.dispatchKeyEvent(event);
     }
@@ -135,8 +136,8 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
     private void initView() {
         gameView = (Game24View) findViewById(R.id.gameView);
         gameView.setOnRectClickListener(this);
-        answerView = (Game24AnswerView) findViewById(R.id.answerView);
-        answerView.setOnRectClickListener(this);
+        //answerView = (Game24AnswerView) findViewById(R.id.answerView);
+        //answerView.setOnRectClickListener(this);
     }
 
     /**
@@ -338,9 +339,18 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
      * @param view
      */
     public void onAnswer(View view) {
-        answerView.setVisibility(View.VISIBLE);
-        answerView.setPicIds(gameView.getPic());
-        gameView.setTouchable(false);
+        //answerView.setVisibility(View.VISIBLE);
+        //answerView.setPicIds(gameView.getPic());
+        Intent intent = new Intent(this, AnswerUI.class);
+        int[] numbers = gameView.getPic();
+        if(numbers == null || numbers.length < 5) {
+            Toast.makeText(this, "请先确认已发牌!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        intent.putExtra("numbers", numbers);
+        startActivity(intent);
+
+        //gameView.setTouchable(false);
         reportEvent("show_answer_click");
     }
 
@@ -361,16 +371,9 @@ public class FzhGame24Activity extends AppCompatActivity implements OnRectClickL
      */
     @Override public void onRectClick(int flag) {
         switch (flag) {
-
             case Game24View.GAME_OVER:
                 // 当前局结束
                 showGameAgaimDailog();
-                break;
-
-            case Game24View.CLOSE_ANSWER:
-                // 关闭答案
-                answerView.setVisibility(View.GONE);
-                gameView.setTouchable(true);
                 break;
         }
     }

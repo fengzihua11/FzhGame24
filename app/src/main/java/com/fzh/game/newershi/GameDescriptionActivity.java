@@ -1,6 +1,5 @@
-package com.fzh.game.ershi;
+package com.fzh.game.newershi;
 
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,8 +18,6 @@ public class GameDescriptionActivity extends AppCompatActivity {
         ActionBar bar = getSupportActionBar();
         bar.setDisplayHomeAsUpEnabled(true);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
