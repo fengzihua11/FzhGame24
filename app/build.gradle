@@ -18,7 +18,7 @@ android {
 
     // 基本配置
     defaultConfig {
-        applicationId "com.fzh.game.newershi"
+        applicationId "com.fzh.game.ershi"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 20101

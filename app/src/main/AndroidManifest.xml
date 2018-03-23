@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".FzhGame24Activity"
+            android:name="com.fzh.game.newershi.FzhGame24Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -40,11 +40,11 @@
         </activity>
 
         <!--答案区-->
-        <activity android:name=".AnswerUI"
+        <activity android:name="com.fzh.game.newershi.AnswerUI"
             android:label="@string/game_answer_label"></activity>
 
         <!--游戏玩法描述-->
-        <activity android:name=".GameDescriptionActivity"
+        <activity android:name="com.fzh.game.newershi.GameDescriptionActivity"
             android:label="@string/game_description_label"></activity>
 
         <!-- GDT, 广点通 -->
@@ -52,7 +52,6 @@
         <service android:name="com.qq.e.comm.DownloadService" android:exported="false" />
         <activity android:name="com.qq.e.ads.ADActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
         -->
-
 
         <!-- 友盟 -->
         <meta-data
